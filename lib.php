@@ -22,13 +22,20 @@
 
 // Setup for superglobal stuff that can't go in globals.php.
 
+    // include all files here
+    include("classes/game/control.php");
+    include("classes/users/Users.php");
+    include("classes/users/Account.php");
+    include("classes/messages/Messages.php");
+
 $starttime = getmicrotime();
 $numqueries = 0;
 $link = opendb();
-$version = "Beta 5";
+$version = "Beta 6";
 $bnumber = "20";
 $bname = "Consolation Prize Part Deux";
 $bdate = "9.2.2007";
+
 include("lib2.php");
 
 // Handling for servers with magic_quotes turned on.
@@ -37,7 +44,10 @@ if (get_magic_quotes_gpc()) {
    $_POST = array_map('uber_ss', $_POST);
    $_GET = array_map('uber_ss', $_GET);
    $_COOKIE = array_map('uber_ss', $_COOKIE);
-
+    echo "<pre>";
+    print_r($_COOKIE);
+    echo "</pre>";
+    die();
 }
 $_POST = array_map('uber_mres', $_POST);
 $_POST = array_map('uber_hsc', $_POST);
@@ -105,10 +115,6 @@ function doquery($query) { // Something of a tiny little database abstraction la
         if ($controlrow["debug"] == 1) {
             die(mysqli_error($mysqlConnect) . "<br /><br />" . $query);
         } else {
-            echo "<pre>";
-            print_r($query);
-            echo "</pre>";
-
             die("A MySQL query error occurred. Please contact the game administrator for more help.");
         }
     }
@@ -218,19 +224,18 @@ function mymail($to, $title, $body, $from = '') { // thanks to arto dot PLEASE d
 
 function err($error, $system = false, $panels = true) { // Basic little error handler.
 
+    global $userrow;
+
      $errmsg = "One or more errors have occurred:<br /><br /><b>$error</b><br /><br />Please <a href=\"javascript:history.go(-1);\">go back</a> and try again.";
-     display("Error", $errmsg, $panels);
+     display("Error", $errmsg, $panels, $userrow['id']);
 
 }
 
-function display($title, $content, $panels = true) { // Finalize page and output to browser.
+function display($title, $content, $panels = true, $userId) { // Finalize page and output to browser.
 
-    include('config.php');
-    global $controlrow, $userrow, $worldrow, $numqueries, $starttime, $version, $build;
+    global $userrow, $worldrow, $numqueries, $starttime, $version, $build;
 
-    if (!isset($controlrow)) {
-        $controlrow = dorow(doquery("SELECT * FROM control WHERE id='1' LIMIT 1"));
-    }
+    $controlrow = Control::getControl(1);
 
     // Make page tags for XHTML validation.
     $page = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"

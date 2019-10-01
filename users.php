@@ -203,7 +203,7 @@ function profile() {
     $class = dorow(doquery("SELECT * FROM classes WHERE id='".$newuserrow["charclass"]."' LIMIT 1"));
     $newuserrow["charclass"] = $class["name"];
 
-    display("Extended Profile",parsetemplate(gettemplate($template),$newuserrow));
+    display("Extended Profile",parsetemplate(gettemplate($template),$newuserrow), true, $userrow['id']);
     
 }
 
@@ -269,7 +269,7 @@ function settings() {
     } else {
         $row["minimap"] = "<option value=\"1\">Yes</option><option value=\"0\">No</option>";
     }
-    display("Account Settings", parsetemplate(gettemplate("users_settings"), $row));
+    display("Account Settings", parsetemplate(gettemplate("users_settings"), $row), true, $acctrow['id']);
     
 }
 

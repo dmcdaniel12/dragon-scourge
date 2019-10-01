@@ -40,7 +40,7 @@ function guildmain() {
     }
     
     $row["guildlist"] .= "</table><br />";
-    display("Guild Hall", parsetemplate(gettemplate("guild_list"), $row));
+    display("Guild Hall", parsetemplate(gettemplate("guild_list"), $row), true, $userrow['id']);
     
 }
 
@@ -94,7 +94,7 @@ function guildhome() {
     } else { $pagerow["news"] = "No news yet."; }
     
     $title = "[".$guild["tagline"]."] ".$guild["name"] . " (Honor: ".$guild["honor"].")";
-    display($title, parsetemplate(gettemplate($template),$pagerow));
+    display($title, parsetemplate(gettemplate($template),$pagerow), true, $userrow['id']);
     
 }
 
@@ -150,7 +150,7 @@ function guildcreate() {
             $query = doquery("UPDATE users SET gold=gold-".$controlrow["guildstartup"].", guild='".mysqli_insert_id()."',guildrank='5',guildtag='$tagline',tagcolor='$color1',namecolor='$color2' WHERE id='".$userrow["id"]."' LIMIT 1");
             
             // And we're done.
-            display("Create a Guild", "Your guild was successfully created.<br /><br />You may now return to <a href=\"index.php\">the game</a>.");
+            display("Create a Guild", "Your guild was successfully created.<br /><br />You may now return to <a href=\"index.php\">the game</a>.", true, $userrow['id']);
             
         } else {
             
@@ -162,7 +162,7 @@ function guildcreate() {
     }
     
     $row["guildstartup"] = number_format($controlrow["guildstartup"]);
-    display("Create a Guild", parsetemplate(gettemplate("guild_create"), $row));
+    display("Create a Guild", parsetemplate(gettemplate("guild_create"), $row), true, $userrow['id']);
     
 }
 
@@ -212,7 +212,7 @@ function guildedit() {
             $updatemem = doquery("UPDATE users SET namecolor='$color2', tagcolor='$color1' WHERE guild='".$guild["id"]."'");
 
             // And we're done.
-            display("Edit Guild", "Your guild was successfully edited.<br /><br />You may now return to <a href=\"index.php\">town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+            display("Edit Guild", "Your guild was successfully edited.<br /><br />You may now return to <a href=\"index.php\">town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.", true, $userrow['id']);
             
         } else {
             
@@ -223,7 +223,7 @@ function guildedit() {
         
     }
     
-    display("Edit Guild", parsetemplate(gettemplate("guild_edit"), $guild));
+    display("Edit Guild", parsetemplate(gettemplate("guild_edit"), $guild), true, $userrow['id']);
     
 }
 
@@ -249,7 +249,7 @@ function guildapp() {
         $update = doquery("UPDATE guilds SET bank=bank+".$guild["joincost"]." WHERE id='".$guild["id"]."' LIMIT 1");
         $updatemem = doquery("UPDATE users SET gold=gold-".$guild["joincost"]." WHERE id='".$userrow["id"]."' LIMIT 1");
         $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='0', sendername='".$guild["name"]."', recipientid='".$guild["founder"]."', recipientname='Guild Leader', status='0', title='New Guild Application', message='Someone has applied to join your Guild.<br /><br /><b>Do not reply to this message!</b>', gold='0'");
-        display("Join a Guild", "Thank you for applying to this Guild. If the Guild Leader approves your application, you will be notified via the Post Office.<br /><br />You may now return to <a href=\"index.php\">the game</a>.");
+        display("Join a Guild", "Thank you for applying to this Guild. If the Guild Leader approves your application, you will be notified via the Post Office.<br /><br />You may now return to <a href=\"index.php\">the game</a>.", true, $userrow['id']);
         
     } elseif (isset($_POST["no"])) {
         
@@ -259,7 +259,7 @@ function guildapp() {
     
         $guild["joincost"] = number_format($guild["joincost"]);
         $guild["statement"] = nl2br($guild["statement"]);
-        display("Join a Guild", parsetemplate(gettemplate("guild_apply"), $guild));
+        display("Join a Guild", parsetemplate(gettemplate("guild_apply"), $guild), true, $userrow['id']);
         
     }
     
@@ -285,7 +285,7 @@ function guildmembers() {
     }
     $row["guildmembers"] .= "</table><br />";
     $row["name"] = $guild["name"];
-    display("Guild Hall", parsetemplate(gettemplate("guild_members"), $row));
+    display("Guild Hall", parsetemplate(gettemplate("guild_members"), $row), true, $userrow['id']);
     
 }
 
@@ -314,7 +314,7 @@ function guildbank() {
         // Do stuff.
         $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='0', sendername='".$guild["name"]."', recipientid='$charid', recipientname='".$member["charname"]."', status='0', title='Money from your Guild', message='Your Guild has sent you money from the Guild Bank.<br /><br /><b>Do not reply to this message!</b>', gold='$gold'");
         $update = doquery("UPDATE guilds SET bank=bank-$gold WHERE id='".$userrow["guild"]."' LIMIT 1");
-        display("Post Office", gettemplate("mailbox_sent"));
+        display("Post Office", gettemplate("mailbox_sent"), true, $userrow['id']);
         
     } elseif (isset($_POST["in"])) {
     
@@ -326,7 +326,7 @@ function guildbank() {
         // Do stuff.
         $update = doquery("UPDATE guilds SET bank=bank+".$_POST["golddeposit"]." WHERE id='".$userrow["guild"]."' LIMIT 1");
         $updatemem = doquery("UPDATE users SET gold=gold-".$_POST["golddeposit"]." WHERE id='".$userrow["id"]."' LIMIT 1");
-        display("Guild Bank", "Thank you for depositing money to the Guild Bank.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+        display("Guild Bank", "Thank you for depositing money to the Guild Bank.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.", true, $userrow['id']);
     
     }
    
@@ -367,7 +367,7 @@ function guildpromote() {
         
     }
     
-    display("Guild Ranks", "Thank you for promoting/demoting this user.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+    display("Guild Ranks", "Thank you for promoting/demoting this user.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.", true, $userrow['id']);
     
 }
 
@@ -499,7 +499,7 @@ function guildleave() {
         
     }
     
-    display("Leave Guild", gettemplate("guild_leave"));
+    display("Leave Guild", gettemplate("guild_leave"), true, $userrow['id']);
     
 }
 

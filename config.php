@@ -14,12 +14,12 @@
 //	within the confines of the Dragon Scourge License Agreement
 //	(see our website for that).
 
-$dbsettings = Array(
+$dbsettings = [
         "server"        => "localhost",     // MySQL server name. (Usually localhost.)
-        "user"          => "root",              // MySQL username.
+        "user"          => "root",          // MySQL username.
         "pass"          => "",              // MySQL password.
-        "name"          => "ds",              // MySQL database name.
+        "name"          => "ds",            // MySQL database name.
         "prefix"        => "sx",            // Prefix for table names.
-        "secretword"    => "test123");             // Secret word used when hashing information for cookies.
-        
-?>
+        "secretword"    => "test123"        // Secret word used when hashing information for cookies.
+];
+
