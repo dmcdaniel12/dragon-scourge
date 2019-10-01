@@ -14,7 +14,7 @@
 //	within the confines of the Dragon Scourge License Agreement
 //	(see our website for that).
 
-error_reporting(E_STRICT);
+//error_reporting(E_STRICT);
 
 include("lib.php");
 include("globals.php");
@@ -77,6 +77,7 @@ if(isset($_GET["do"])) {
 function donothing() {
     
     global $userrow;
+
     if ($userrow["story"] != "0" && $userrow["storylat"] == $userrow["latitude"] && $userrow["storylon"] == $userrow["longitude"]) {
         die(header("Location: story.php"));
     }
