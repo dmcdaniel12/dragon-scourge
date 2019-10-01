@@ -77,7 +77,7 @@ THEVERYENDOFYOU;
     $townstring .= ") AND world='".$userrow["world"]."'";
 
     // Then we do the query.
-    $traveltoquery = dorow(doquery("SELECT id, 'name' FROM towns WHERE $townstring ORDER BY id"), "id");
+    $traveltoquery = dorow(doquery("SELECT id, `name` FROM towns WHERE $townstring ORDER BY id"), "id");
 
     // Finally we build the link list.
     foreach ($traveltoquery as $a => $b) {

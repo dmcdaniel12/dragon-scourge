@@ -50,11 +50,11 @@ function inn() { // Resting at the inn restores hp/mp/tp.
         $userrow["currenttp"] = $userrow["maxtp"];
         $userrow["gold"] -= $townrow["innprice"];
         $query = doquery("UPDATE users SET currenthp='".$userrow["maxhp"]."', currentmp='".$userrow["maxmp"]."', currenttp='".$userrow["maxtp"]."', gold='".$userrow["gold"]."' WHERE id='".$userrow["id"]."' LIMIT 1");
-        display("Rest at the Inn", gettemplate("town_inn2"));
+        display("Rest at the Inn", gettemplate("town_inn2"), true, $userrow['id']);
         
     } elseif (isset($_POST["abortmission"])) { die(header("Location: index.php")); }
     
-    display("Rest at the Inn", parsetemplate(gettemplate("town_inn1"), $townrow));
+    display("Rest at the Inn", parsetemplate(gettemplate("town_inn1"), $townrow), true, $userrow['id']);
     
 }
 
@@ -92,22 +92,35 @@ function map() { // Buy maps to towns for the Travel To menu.
         }
         
     } else {
-    
-        $townquery = doquery("SELECT * FROM towns WHERE world='".$userrow["world"]."' ORDER BY id");
-        $townrow = dorow($townquery);
-        $townslist = explode(",",$userrow["townslist"]);
+        $towns = new Towns();
+        $townMaps = $towns->getWorldMaps($userrow["world"]);
+
+        $userTownLists = explode(",",$userrow["townslist"]);
         
         $row["maptable"] = "<form action=\"index.php?do=maps\" method=\"post\"><table width=\95%\">\n";
-        foreach($townrow as $a=>$b) {
-            if (in_array($b["id"], $townslist)) {
-                if ($b["latitude"] < 0) { $latitude = ($b["latitude"] * -1) . "S"; } else { $latitude = $b["latitude"] . "N"; }
-                if ($b["longitude"] < 0) { $longitude = ($b["longitude"] * -1) . "W"; } else { $longitude = $b["longitude"] . "E"; }
-                $row["maptable"] .= "<tr><td width=\"20%\"><input type=\"submit\" name=\"two\" value=\"".$b["name"]."\" style=\"width: 100px;\" disabled=\"disabled\" /></td><td width=\"30%\" style=\"vertical-align: middle;\"><span class=\"grey\">Already Purchased</span></td><td width=\"30%\" style=\"vertical-align: middle;\"><span class=\"grey\">Location: <b>$latitude, $longitude</b></span></td><td width=\"20%\" style=\"vertical-align: middle;\"><span class=\"grey\">TP: <b>".$b["travelpoints"]."</b></span></td></tr>\n";
+        foreach($townMaps as $key => $val) {
+
+            if (in_array($val->id, $userTownLists)) {
+
+                if ($val->latitude < 0) {
+                    $latitude = ($val->latitude * -1) . "S";
+                } else {
+                    $latitude = $val->latitude . "N";
+                }
+
+                if ($val->longitude < 0) {
+                    $longitude = ($val->longitude * -1) . "W";
+                } else {
+                    $longitude = $val->longitude . "E";
+                }
+                $row["maptable"] .= "<tr><td width=\"20%\"><input type=\"submit\" name=\"two\" value=\"".$val->name."\" style=\"width: 100px;\" disabled=\"disabled\" /></td><td width=\"30%\" style=\"vertical-align: middle;\"><span class=\"grey\">Already Purchased</span></td><td width=\"30%\" style=\"vertical-align: middle;\"><span class=\"grey\">Location: <b>$latitude, $longitude</b></span></td><td width=\"20%\" style=\"vertical-align: middle;\"><span class=\"grey\">TP: <b>".$val->travelpoints."</b></span></td></tr>\n";
             } else {
-                $row["maptable"] .= "<tr><td width=\"20%\"><input type=\"submit\" name=\"two\" value=\"".$b["name"]."\" style=\"width: 100px;\" /></td><td width=\"30%\" style=\"vertical-align: middle;\">Price: <b>".$b["mapprice"]." Gold</b></td><td colspan=\"2\" style=\"vertical-align: middle;\">Buy map to reveal details.</td></tr>\n";
+                $row["maptable"] .= "<tr><td width=\"20%\"><input type=\"submit\" name=\"two\" value=\"".$val->name."\" style=\"width: 100px;\" /></td><td width=\"30%\" style=\"vertical-align: middle;\">Price: <b>".$val->mapprice." Gold</b></td><td colspan=\"2\" style=\"vertical-align: middle;\">Buy map to reveal details.</td></tr>\n";
             }
         }
+
         $row["maptable"] .= "</table></form>\n";
+        
         display("Buy Maps", parsetemplate(gettemplate("town_map1"), $row), true, $userrow['id']);
         
     }

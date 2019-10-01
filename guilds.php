@@ -326,7 +326,7 @@ function guildbank() {
         // Do stuff.
         $update = doquery("UPDATE guilds SET bank=bank+".$_POST["golddeposit"]." WHERE id='".$userrow["guild"]."' LIMIT 1");
         $updatemem = doquery("UPDATE users SET gold=gold-".$_POST["golddeposit"]." WHERE id='".$userrow["id"]."' LIMIT 1");
-        display("Guild Bank", "Thank you for depositing money to the Guild Bank.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.", true, $userrow['id']);
+        display("Guild Bank", ">Guild Hall</a>.", true, $userrow['id']);
     
     }
    
@@ -367,7 +367,7 @@ function guildpromote() {
         
     }
     
-    display("Guild Ranks", "Thank you for promoting/demoting this user.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.", true, $userrow['id']);
+    display("Guild Ranks", ">Guild Hall</a>.", true, $userrow['id']);
     
 }
 
@@ -391,11 +391,11 @@ function guildapprove() {
         $deleteapp = doquery("DELETE FROM guildapps WHERE guild='".$userrow["guild"]."' AND charid='$charid' LIMIT 1");
         $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='0', sendername='".$guild["name"]."', recipientid='$charid', recipientname='".$member["charname"]."', status='0', title='Guild Approval', message='The Guild has approved you for membership, and you are now a member of ".$guild["name"].". Congratulations!<br /><br /><b>Do not reply to this message!</b>', gold='0'");
         guildupdate();
-        display("Approve Members", "Thank you for approving this user.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+        display("Approve Members", ">Guild Hall</a>.");
     } else {
         $deleteapp = doquery("DELETE FROM guilds WHERE guild='".$userrow["guild"]."' AND charid='$charid' LIMIT 1");
         $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='0', sendername='".$guild["name"]."', recipientid='$charid', recipientname='".$member["charname"]."', status='0', title='Guild Denial', message='The Guild has denied your application for membership. Sorry.<br /><br /><b>Do not reply to this message!</b>', gold='0'");
-        display("Approve Members", "Thank you for denying this user.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+        display("Approve Members", ">Guild Hall</a>.");
     }
     
 }
@@ -414,7 +414,7 @@ function guildremove() {
         $updatemem = doquery("UPDATE users SET guild='0', guildrank='0', guildtag='', tagcolor='', namecolor='' WHERE id='$charid' LIMIT 1");
         $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='0', sendername='".$guild["name"]."', recipientid='$charid', recipientname='".$member["charname"]."', status='0', title='Guild Removal', message='The Guild has removed you from their membership. Sorry.<br /><br /><b>Do not reply to this message!</b>', gold='0'");
         guildupdate();
-        display("Remove Members", "Thank you for removing this user.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+        display("Remove Members", ">Guild Hall</a>.");
         
     } elseif (isset($_POST["no"])) { 
     
@@ -441,7 +441,7 @@ function guildnews() {
     if (isset($_POST["submit"])) {
         
         $query = doquery("UPDATE guilds SET news='".$_POST["news"]."' WHERE id='".$userrow["guild"]."' LIMIT 1");
-        display("Guild News", "Thank you for updating your Guild News.<br /><br />You may now return to <a href=\"index.php\">Town</a> or to your <a href=\"index.php?do=guildhome\">Guild Hall</a>.");
+        display("Guild News", ">Guild Hall</a>.");
         
     }
     
@@ -468,7 +468,7 @@ function guilddisband() {
         $updatemem = doquery("UPDATE users SET guild='0', guildrank='0', guildtag='', tagcolor='', namecolor='' WHERE guild='".$guild["id"]."'");
         $delete = doquery("DELETE FROM guilds WHERE id='".$guild["id"]."'");
         $deletebb = doquery("DELETE FROM babblebox WHERE guild='".$guild["id"]."'");
-        display("Disband Guild", "Thank you for disbanding your Guild.<br /><br />You may now return to <a href=\"index.php\">Town</a>.");
+        display("Disband Guild", ">Towns</a>.");
         
     } elseif (isset($_POST["no"])) {
     
@@ -491,7 +491,7 @@ function guildleave() {
         $updatemem = doquery("UPDATE users SET guild='0', guildrank='0', guildtag='', tagcolor='', namecolor='' WHERE id='".$userrow["id"]."'");
         $update = doquery("UPDATE guilds SET members=members-1 WHERE id='".$userrow["guild"]."' LIMIT 1");
         guildupdate();
-        display("Leave Guild", "Thank you for leaving your Guild.<br /><br />You may now return to <a href=\"index.php\">Town</a>.");
+        display("Leave Guild", ">Towns</a>.");
         
     } elseif (isset($_POST["no"])) {
     

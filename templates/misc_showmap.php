@@ -41,7 +41,7 @@ a:hover { color: #663300; }
 <param name="movie" value="map.swf" /><param name="quality" value="high" /><param name="bgcolor" value="#ffffff" /><embed src="map.swf" quality="high" bgcolor="#ffffff" width="510" height="510" name="map" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
 </object>
 </div>
-<font color="gray">Town</font> | <font color="red">You</font> | <font color="blue">Player</font>
+<font color="gray">Towns</font> | <font color="red">You</font> | <font color="blue">Player</font>
 </center></body>
 </html>
 END;

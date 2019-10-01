@@ -27,6 +27,7 @@
     include("classes/users/Users.php");
     include("classes/users/Account.php");
     include("classes/messages/Messages.php");
+    include("classes/town/Towns.php");
 
 $starttime = getmicrotime();
 $numqueries = 0;
