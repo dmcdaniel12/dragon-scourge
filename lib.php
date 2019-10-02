@@ -28,6 +28,7 @@
     include("classes/users/Account.php");
     include("classes/messages/Messages.php");
     include("classes/town/Towns.php");
+    include("classes/game/Babblebox.php");
 
 $starttime = getmicrotime();
 $numqueries = 0;
