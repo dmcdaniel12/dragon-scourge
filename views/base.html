@@ -24,7 +24,7 @@
                             <a href="index.php"><img src="images/logo.png" alt="{{gamename}}" title="{{gamename}}"/></a>
                         </td>
                         <td style="vertical-align:middle; white-space:nowrap;">
-                            {{topnav}}
+                            {{ include('navs/topnav.html') }}
                         </td>
                     </tr>
                 </table>
@@ -33,7 +33,7 @@
         <tr>
             <td valign="top" style="height: 100%; border-right: solid 1px #cccccc;">
                 <img src="images/spacer.gif" alt="" width="140" height="1"/><br/>
-                {{leftnav}}
+                {{ include('navs/leftnav.html') }}
             </td>
             <td valign="top" style="height: 100%;">
                 <div style="width: 475px; height: 405px; overflow: auto;">
@@ -43,11 +43,11 @@
             </td>
             <td valign="top" style="height: 100%; border-left: solid 1px #cccccc;">
                 <img src="images/spacer.gif" alt="" width="160" height="1"/><br/>
-                {{rightnav}}
+                {{ include('navs/rightnav.html') }}
             </td>
         </tr>
         <tr>
-            <td colspan="3" style="border-top: solid 1px #cccccc;">{{bottomnav}}</td>
+            <td colspan="3" style="border-top: solid 1px #cccccc;">{{ include('navs/bottomnav.html') }}</td>
         </tr>
     </table>
 

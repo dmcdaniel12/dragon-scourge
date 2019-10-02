@@ -31,8 +31,8 @@ function dotown($twig) { // Default town screen.
         $row["unread"] = "";
     }
 
-    echo $twig->render('town.html', ['unread' => $row['unread']]);
-//    display("In Town", parsetemplate(gettemplate("town"), $row), true, $userrow['id']);
+//    echo $twig->render('town.html', ['unread' => $row['unread']]);
+    display("In Town", parsetemplate(gettemplate("town"), $row), true, $userrow['id']);
 
 }
 

@@ -16,7 +16,15 @@
 
         }
 
-        public function BuyMap() {
+        public function buyMap() {
 
+        }
+
+        public function whosOnline() {
+            $onlineTimestamp = (time()-600);
+
+            $whosOnline = Users::where('onlinetime', '>=', $onlineTimestamp)->get();
+
+            return $whosOnline;
         }
     }

@@ -18,5 +18,3 @@ $template = <<<END
 {{babblebox}}
 {{whosonline}}
 END;
-
-?>
