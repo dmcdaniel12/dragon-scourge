@@ -15,8 +15,10 @@
 //	(see our website for that).
 
 function doexplore() { // Default explore screen.
-    
-    display("Exploring", gettemplate("explore"));
+
+    global $userrow;
+
+    display("Exploring", gettemplate("explore"), true, $userrow['id']);
     
 }
 
@@ -65,7 +67,7 @@ function move() { // Primary exploring function. Move them with the compass butt
             $string .= ", townslist='".$userrow["townslist"]."'";
         }
         doquery("UPDATE users SET currentaction='In Town' $string WHERE id='".$userrow["id"]."' LIMIT 1");
-        display("Exploring", parsetemplate(gettemplate("town_enter"), $row));
+        display("Exploring", parsetemplate(gettemplate("town_enter"), $row), true, $userrow['id']);
     }
     
     // Decide if we want to pick a fight with someone.
@@ -84,7 +86,7 @@ function move() { // Primary exploring function. Move them with the compass butt
     // If we've gotten this far, nothing has happened.
     $userrow["currentaction"] = "Exploring";
     doquery("UPDATE users SET currentaction='Exploring', dropidstring='0' $string WHERE id='".$userrow["id"]."' LIMIT 1");
-    display("Exploring", gettemplate("explore"));
+    display("Exploring", gettemplate("explore"), true, $userrow['id']);
     
 }
 
@@ -113,7 +115,7 @@ function travel($id) { // Move them with the Travel To list.
     $userrow["latitude"] = $row["latitude"];
     $userrow["currenttp"] -= $row["travelpoints"];
     $query = doquery("UPDATE users SET dropidstring='0', latitude='".$userrow["latitude"]."', longitude='".$userrow["longitude"]."', currenttp='".$userrow["currenttp"]."', currentaction='In Town' WHERE id='".$userrow["id"]."' LIMIT 1");
-    display("Exploring", parsetemplate(gettemplate("town_enter"), $row));
+    display("Exploring", parsetemplate(gettemplate("town_enter"), $row), true, $userrow['id']);
     
 }
 
@@ -139,7 +141,7 @@ function quickheal() { // Quick heal.
     $userrow["currenthp"] = min($userrow["currenthp"] + $spells[$id]["value"], $userrow["maxhp"]);
     $userrow["currentmp"] = $userrow["currentmp"] - $spells[$id]["mp"];
     doquery("UPDATE users SET currenthp='".$userrow["currenthp"]."', currentmp='".$userrow["currentmp"]."' WHERE id='".$userrow["id"]."' LIMIT 1");
-    display("Exploring", gettemplate("explore_quickheal"));
+    display("Exploring", gettemplate("explore_quickheal"), true, $userrow['id']);
     
 }
 
@@ -213,7 +215,7 @@ function itemdrop() { // Handling for item drops from monsters.
         }
         
         updateuserrow();
-        display("Item Drop", gettemplate("explore_drop_accept"));
+        display("Item Drop", gettemplate("explore_drop_accept"), true, $userrow['id']);
         
     }
     
@@ -224,7 +226,7 @@ function itemdrop() { // Handling for item drops from monsters.
     }
     
     // And we're done.
-    display("Item Drop", parsetemplate(gettemplate("explore_drop"),$row));
+    display("Item Drop", parsetemplate(gettemplate("explore_drop"),$row), true, $userrow['id']);
 
     
 }

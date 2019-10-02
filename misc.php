@@ -52,28 +52,27 @@ END;
 
 }
 
+    /**
+     * @TODO move to oop
+     * Status: Started
+     */
 function babblebox2() {
 
     global $userrow, $controlrow;
 
-    if (isset($_GET["g"])) {
-        $guild = $userrow["guild"];
-        $g = "WHERE guild='$guild'";
-        $g2 = ", guild='$guild'";
-        $row["guild"] = "&g=yes";
-    } else {
-        $g = "WHERE guild='0'";
-        $row["guild"] = "";
-    }
+    $babblebox = new Babblebox();
 
     if (isset($_POST["babble"])) {
 
         // Add new shout.
+        // @TODO Move to Babblebox class
         if (trim($_POST["babble"]) != "") {
-            $insert = doquery("INSERT INTO babblebox SET id='', posttime=NOW(), charid='".$userrow["id"]."', charname='".$userrow["charname"]."', content='".$_POST["babble"]."' $g2");
+            $babbleText = $_POST["babble"];
+            $babblebox->add($userrow["id"], $userrow['charname'], $babbleText);
         }
 
         // Only keep 20 shouts in DB at any one time.
+        // @TODO Move to a cron to cleanup
         $check = doquery("SELECT * FROM babblebox $g");
         if (mysqli_num_rows($check) > 20) {
             $delete1 = dorow(doquery("SELECT id FROM babblebox $g ORDER BY id LIMIT 1"));
@@ -85,10 +84,15 @@ function babblebox2() {
 
     }
 
-    $shouts = dorow(doquery("SELECT * FROM babblebox $g ORDER BY id LIMIT 20"), "id");
+    if (isset($_GET['g'])) {
+        $shouts = $babblebox->getGuildBabble($userrow["guild"]);
+    } else {
+        $shouts = $babblebox->getBabbles();
+    }
+
     $row["shouts"] = "";
     $background = 1;
-    if ($shouts != false) {
+    if (count($shouts) !== 0) {
         foreach ($shouts as $a => $b) {
             $row["shouts"] .= "<div class=\"babble$background\">[<a href=\"users.php?do=profile&uid=".$b["charid"]."\" target=\"_parent\">".$b["charname"]."</a>] ".$b["content"]."</div>\n";
             if ($background == 1) { $background = 2; } else { $background = 1; }
@@ -97,6 +101,7 @@ function babblebox2() {
         $row["shouts"] = "<div class=\"babble$background\">No shouts.</div>";
     }
 
+    // @TODO Move to template
     $page = parsetemplate(gettemplate("misc_babblebox"),$row);
     if ($controlrow["compression"] == 1) { ob_start("ob_gzhandler"); }
     echo $page;

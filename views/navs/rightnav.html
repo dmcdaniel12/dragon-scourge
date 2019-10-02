@@ -1,0 +1,9 @@
+{{babblebox}}
+
+<div class="big">
+    <b>Who's Online</b>
+</div>
+There are <b>1</b> user(s) online within the last 10 minutes:
+{% for user in online %}
+    <a href="users.php?do=profile&uid={{ user['id'] }}">{{ user['charname'] }}</a>
+{% endfor %}

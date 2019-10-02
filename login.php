@@ -14,7 +14,11 @@
 //	within the confines of the Dragon Scourge License Agreement
 //	(see our website for that).
 
-include("lib.php");
+    require 'vendor/autoload.php';
+
+    include("lib.php");
+
+
 if (isset($_GET["do"])) { $do = $_GET["do"]; } else { $do = ""; }
 
 switch($do) {
@@ -26,41 +30,40 @@ switch($do) {
 }
 
 function login() {
-    
-    $controlrow = dorow(doquery("SELECT * FROM control WHERE id='1' LIMIT 1"));
+
+    $controlRow = Control::getControl(1);
 
     if (isset($_POST["submit"])) {
         
         // Setup.
         include("config.php");
         extract($_POST);
-        $query = doquery("SELECT * FROM accounts WHERE username='$username' LIMIT 1");
-        $row = dorow($query);
+
+        // get username info here
+        $account = new Account();
+        $loggedIn = $account->login($username, $password);
+
+        // Set Cookie.
+        $newcookie = $loggedIn->id . " " . $username . " " . md5($loggedIn->password . "--" . $dbsettings["secretword"]);
         
-        // Errors.
-        if ($row == false) { err("Invalid username. Please <a href=\"index.php\">go back</a> and try again.", false, false); }
-        if ($row["password"] != md5($password)) { err("Invalid password. Please <a href=\"index.php\">go back</a> and try again.", false, false); }
-        if ($row["verifycode"] != 1) { err("You have not yet verified your account. Please click the link found in your Account Verification email before continuing. If you never received the email, please check your spam filter settings or contact the game administrator for further assistance.", false, false); }
-        
-        // Finish.
-        $newcookie = $row["id"] . " " . $username . " " . md5($row["password"] . "--" . $dbsettings["secretword"]);
         if (isset($remember)) { $expiretime = time()+31536000; $newcookie .= " 1"; } else { $expiretime = 0; $newcookie .= " 0"; }
-        setcookie($controlrow["cookiename"], $newcookie, $expiretime, "/", $controlrow["cookiedomain"], 0);
+        setcookie($controlRow->cookiename, $newcookie, $expiretime, "/", $controlRow->cookiedomain, 0);
+
         die(header("Location: index.php"));
         
     } else {
-        display("Log In", gettemplate("login"), false);
+        display("Log In", gettemplate("login"), false, 0);
         
     }
     
 }
 
+// @TODO Move to Accounts
 function logout() {
     
     include("globals.php");
     setcookie($controlrow["cookiename"], "", (time()-3600), "/", $controlrow["cookiedomain"], 0);
     die(header("Location: login.php?do=login"));
-    
 }
 
 ?>

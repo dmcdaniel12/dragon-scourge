@@ -30,5 +30,3 @@ Longitude: {{longitude}}<br /><br />
 {{travelto}}
 
 END;
-
-?>

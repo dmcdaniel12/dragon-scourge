@@ -36,7 +36,7 @@ function mailbox() {
     }
 
     $row["messages"] .= "</table><br />\n";
-    display("Post Office", parsetemplate(gettemplate("mailbox_list"), $row));
+    display("Post Office", parsetemplate(gettemplate("mailbox_list"), $row), true, $userrow['id']);
     
 }
 
@@ -56,7 +56,7 @@ function outbox() {
     }
 
     $row["messages"] .= "</table><br />\n";
-    display("Post Office", parsetemplate(gettemplate("mailbox_listout"), $row));
+    display("Post Office", parsetemplate(gettemplate("mailbox_listout"), $row), true, $userrow['id']);
     
 }
 
@@ -91,7 +91,7 @@ function letter() {
     }
     
     $message["message"] = nl2br($message["message"]);
-    display("Post Office", parsetemplate(gettemplate("mailbox_letter"), $message));
+    display("Post Office", parsetemplate(gettemplate("mailbox_letter"), $message), true, $userrow['id']);
     
 }
 
@@ -105,7 +105,7 @@ function letterout() {
     if ($message["senderid"] != $userrow["id"]) { err("Invalid action. Please <a href=\"index.php\">go back</a> and try again."); }
     
     $message["message"] = nl2br($message["message"]);
-    display("Post Office", parsetemplate(gettemplate("mailbox_letterout"), $message));
+    display("Post Office", parsetemplate(gettemplate("mailbox_letterout"), $message), true, $userrow['id']);
     
 }
 
@@ -139,7 +139,7 @@ function mailnew() {
             
             // And send the message.
             $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='".$userrow["id"]."', sendername='".$userrow["charname"]."', recipientid='".$checkuser["id"]."', recipientname='$recipient', status='0', title='$title', message='$message', gold='$gold'");
-            display("Post Office", gettemplate("mailbox_sent"));
+            display("Post Office", gettemplate("mailbox_sent"), true, $userrow['id']);
             
         } else {
         
@@ -150,7 +150,7 @@ function mailnew() {
 
     }
     
-    display("Post Office", gettemplate("mailbox_new"));
+    display("Post Office", gettemplate("mailbox_new"), true, $userrow['id']);
 
 }
 
@@ -188,7 +188,7 @@ function mailreply() {
             
             // And send the message.
             $send = doquery("INSERT INTO messages SET id='', postdate=NOW(), senderid='".$userrow["id"]."', sendername='".$userrow["charname"]."', recipientid='".$origmessage["senderid"]."', recipientname='".$origmessage["sendername"]."', status='0', title='$title', message='$message', gold='$gold'");
-            display("Post Office", gettemplate("mailbox_sent"));
+            display("Post Office", gettemplate("mailbox_sent"), true, $userrow['id']);
             
         } else {
         
@@ -202,7 +202,7 @@ function mailreply() {
     
     
     $origmessage["message"] = nl2br($origmessage["message"]);
-    display("Post Office", parsetemplate(gettemplate("mailbox_reply"), $origmessage));
+    display("Post Office", parsetemplate(gettemplate("mailbox_reply"), $origmessage), true, $userrow['id']);
     
 }
 
