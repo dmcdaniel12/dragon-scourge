@@ -7,7 +7,7 @@
     <script type="text/javascript" src="scripts/tooltip.js"></script>
     <style type="text/css">
         body {
-            background-image: url(images/{{background}}.jpg);
+            background-image: url("images/background.jpg");
         }
     </style>
 </head>
@@ -37,7 +37,7 @@
             </td>
             <td valign="top" style="height: 100%;">
                 <div style="width: 475px; height: 405px; overflow: auto;">
-                    <div class="big"><b>{{pagetitle}}</b></div>
+                    <div class="big"><b>{{ pagetitle }}</b></div>
                     {% block content %}{% endblock %}
                 </div>
             </td>

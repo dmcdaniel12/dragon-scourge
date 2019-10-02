@@ -3,32 +3,99 @@
         <td width="175" style="vertical-align: middle;">
             <table width="100%" cellspacing="2" cellpadding="0">
                 <tr>
-                    <td><img src="{{charpicture}}" alt="" /></td>
-                    <td width="100%">Level: <b>{{level}}</b> <br />
-                        Exp: <b>{{experience}}</b><br />
-                        Gold: <b>{{gold}}</b><br />
+                    <td>
+                        {% if userinfo['charpicture'] != "" %}
+                        <img src="{{charpicture}}" alt=""/>
+                        {% else %}
+                        <img src="images/users/nopicture.gif" alt=""/>
+                        {% endif %}
+                    </td>
+                    <td width="100%">Level: <b>{{ userinfo['level'] }}</b> <br/>
+                        Exp: <b>{{ userinfo['experience']|number_format(0, '.', ',') }}</b><br/>
+                        Gold: <b>{{ userinfo['gold']|number_format(0, '.', ',') }}</b><br/>
                         <a href="users.php?do=profile">Extended Profile</a>
                     </td>
                 </tr>
             </table>
-        </td><td style="vertical-align: middle;">
-        {{levelup}}<br />
-        {{levelspell}}<br />
-        {{quickheal}}
-    </td>
-        </td><td style="vertical-align: middle;">
-        <table width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-                <td width="33%" style="text-align: right; padding-right: 3px;">Weapon:<br />Armor:<br />Helmet:<br />Shield:</td>
-                <td align="left"><b>{{weapon}}</b><br /><b>{{armor}}</b><br /><b>{{helmet}}</b><br /><b>{{shield}}</b></td>
-            </tr>
-        </table>
-    </td><td width="200" style="vertical-align: middle;">
-        <table width="100%" cellspacing="0" cellpadding="0">
-            <tr><td align="right">{{hpbar}}</td></tr>
-            <tr><td align="right">{{mpbar}}</td></tr>
-            <tr><td align="right">{{tpbar}}</td></tr>
-        </table>
-    </td>
+        </td>
+        <td style="vertical-align: middle;">
+            {{ userinfo['levelup'] }}<br/>
+            {{ userinfo['levelspell'] }}<br/>
+            {{ userinfo['quickheal'] }}
+        </td>
+        </td>
+        <td style="vertical-align: middle;">
+            <table width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="33%" style="text-align: right; padding-right: 3px;">Weapon:<br/>Armor:<br/>Helmet:<br/>Shield:
+                    </td>
+                    <td align="left"><b>{{ userinfo['item1name'] }}</b><br/><b>{{ userinfo['item2name'] }}</b><br/><b>{{
+                        userinfo['item3name'] }}</b><br/><b>{{ userinfo['item4name'] }}</b></td>
+                </tr>
+            </table>
+        </td>
+        <td width="200" style="vertical-align: middle;">
+            <table width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="right">
+                        <table cellspacing="2" cellpadding="0"
+                               title="Hit Points: {{ userinfo['currenthp'] }} / {{ userinfo['maxhp'] }}">
+                            <tr>
+                                <td style="width: 25px; height:10px; font: 10px Verdana; vertical-align: middle;">
+                                    HP:
+                                </td>
+                                <td style="padding:0px; width:100px; height:10px; border:solid 1px black; background-image:url(images/bars_grey.gif);">
+                                    <div style="text-align:right; padding:0px; background-image:url('images/bars_green.gif');">
+                                        <img src="images/bars_greenend.gif" alt=""/></div>
+                                </td>
+                                <td style="width: 60px; height:10px; font: 10px Verdana; vertical-align: middle;">&nbsp;{{
+                                    userinfo['currenthp'] }}
+                                    / {{ userinfo['maxhp'] }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <table cellspacing="2" cellpadding="0"
+                               title="Magic Points: {{ userinfo['currentmp'] }} / {{ userinfo['maxmp'] }}">
+                            <tr>
+                                <td style="width: 25px; height:10px; font: 10px Verdana; vertical-align: middle;">
+                                    MP:
+                                </td>
+                                <td style="padding:0px; width:100px; height:10px; border:solid 1px black; background-image:url(images/bars_grey.gif);">
+                                    <div style="text-align:right; padding:0px; background-image:url('images/bars_yellow.gif');">
+                                        <img src="images/bars_yellowend.gif" alt=""/></div>
+                                </td>
+                                <td style="width: 60px; height:10px; font: 10px Verdana; vertical-align: middle;">&nbsp;{{
+                                    userinfo['currentmp'] }}
+                                    / {{ userinfo['maxmp'] }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <table cellspacing="2" cellpadding="0"
+                               title="Travel Points: {{ userinfo['currenttp'] }} / {{ userinfo['maxmp'] }}">
+                            <tr>
+                                <td style="width: 25px; height:10px; font: 10px Verdana; vertical-align: middle;">
+                                    TP:
+                                </td>
+                                <td style="padding:0px; width:100px; height:10px; border:solid 1px black; background-image:url(images/bars_grey.gif);">
+                                    <div style="text-align:right; padding:0px; background-image:url('images/bars_red.gif');">
+                                        <img src="images/bars_redend.gif" alt=""/></div>
+                                </td>
+                                <td style="width: 60px; height:10px; font: 10px Verdana; vertical-align: middle;">&nbsp;{{ userinfo['currenttp'] }}
+                                    / {{ userinfo['maxtp'] }}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
     </tr>
 </table>

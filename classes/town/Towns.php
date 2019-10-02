@@ -22,7 +22,12 @@
             if ($userGold < $mapInfo->mapprice) {
                 err("You do not have enough gold to buy this map. Please <a href=\"index.php\">go back</a> and try again.");
             }
+        }
 
+        public function getTravelToList($ids) {
+            $townslist = explode(",", $ids);
+
+            return Towns::whereIn('id', $townslist)->get();
 
         }
 

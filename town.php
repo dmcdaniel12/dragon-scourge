@@ -18,8 +18,8 @@
 global $townrow;
 if ($townrow == false) { die(header("Location: index.php")); }
 
-function dotown($twig) { // Default town screen.
-    
+function dotown() { // Default town screen.
+
     global $userrow;
 
     $messages = new Messages();
@@ -31,7 +31,6 @@ function dotown($twig) { // Default town screen.
         $row["unread"] = "";
     }
 
-//    echo $twig->render('town.html', ['unread' => $row['unread']]);
     display("In Town", parsetemplate(gettemplate("town"), $row), true, $userrow['id']);
 
 }

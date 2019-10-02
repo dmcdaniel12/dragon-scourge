@@ -7,8 +7,6 @@
         'cache' => false,
     ]);
 
-//    echo $twig->render('index.html', ['name' => "Derek"]);
-
     include("lib.php");
     include("globals.php");
 
@@ -185,7 +183,7 @@
     function donothing($twig)
     {
 
-        global $userrow;
+        global $userrow, $townrow, $worldrow;
 
         if ($userrow["story"] != "0" && $userrow["storylat"] == $userrow["latitude"] && $userrow["storylon"] == $userrow["longitude"]) {
             die(header("Location: story.php"));
@@ -196,8 +194,49 @@
 
         // @TODO Changing over to template
         if ($userrow["currentaction"] == "In Town") {
-            include("town.php");
-            dotown($twig);
+
+            $messages = new Messages();
+            $newMessages = $messages->getUserMessages($userrow['id'], 0);
+
+            if (count($newMessages) > 0) {
+                $row["unread"] = "(" . count($newMessages) . " new)";
+            } else {
+                $row["unread"] = "";
+            }
+
+            // Location handling.
+            if ($userrow["latitude"] < 0) {
+                $latitude = ($userrow["latitude"] * -1) . "S";
+            } else {
+                $latitude = $userrow["latitude"] . "N";
+            }
+
+            if ($userrow["longitude"] < 0) {
+                $longitude = ($userrow["longitude"] * -1) . "W";
+            } else {
+                $longitude = $userrow["longitude"] . "E";
+            }
+
+            // get travel to towns
+            $townsClass = new Towns();
+            $travel = $townsClass->getTravelToList($userrow['townslist']);
+
+
+            echo $twig->render('town.html',
+                [
+                    'pagetitle' => 'In Town',
+                    'townInfo' => $townrow,
+                    'worldInfo' => $worldrow,
+                    'unread' => $row['unread'],
+                    'userinfo' => $userrow,
+                    'longitude' => $longitude,
+                    'latitude' => $latitude,
+                    'travelTo' => $travel
+                ]
+            );
+
+//            include("town.php");
+//            dotown();
         }
         if ($userrow["currentaction"] == "Exploring") {
             include("explore.php");
