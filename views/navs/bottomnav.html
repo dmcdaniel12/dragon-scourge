@@ -5,9 +5,9 @@
                 <tr>
                     <td>
                         {% if userinfo['charpicture'] != "" %}
-                        <img src="{{charpicture}}" alt=""/>
+                            <img src="{{charpicture}}" alt=""/>
                         {% else %}
-                        <img src="images/users/nopicture.gif" alt=""/>
+                            <img src="images/users/nopicture.gif" alt=""/>
                         {% endif %}
                     </td>
                     <td width="100%">Level: <b>{{ userinfo['level'] }}</b> <br/>
@@ -19,8 +19,11 @@
             </table>
         </td>
         <td style="vertical-align: middle;">
-            {{ userinfo['levelup'] }}<br/>
-            {{ userinfo['levelspell'] }}<br/>
+            {% if userinfo['levelup'] > 0 %}
+                <a href="users.php?do=levelup" class="red">( {{ userrow["levelup"] }} LP)</a>
+            {% endif %}
+            <br/>
+            {% if userinfo['levelspell'] > 0 %} <a href="users.php?do=levelspell" class="blue">( {{ userrow["levelspell"] }} SP)</a> {% endif %}<br/>
             {{ userinfo['quickheal'] }}
         </td>
         </td>

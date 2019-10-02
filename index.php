@@ -235,8 +235,6 @@
                 ]
             );
 
-//            include("town.php");
-//            dotown();
         }
         if ($userrow["currentaction"] == "Exploring") {
             include("explore.php");
