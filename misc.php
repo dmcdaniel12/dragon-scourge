@@ -62,17 +62,6 @@ function babblebox2() {
 
     $babblebox = new Babblebox();
 
-    // @TODO move to guild babble
-    if (isset($_GET["g"])) {
-        $guild = $userrow["guild"];
-        $g = "WHERE guild='$guild'";
-        $g2 = ", guild='$guild'";
-        $row["guild"] = "&g=yes";
-    } else {
-        $g = "WHERE guild='0'";
-        $row["guild"] = "";
-    }
-
     if (isset($_POST["babble"])) {
 
         // Add new shout.
@@ -95,7 +84,12 @@ function babblebox2() {
 
     }
 
-    $shouts = $babblebox->getBabbles();
+    if (isset($_GET['g'])) {
+        $shouts = $babblebox->getGuildBabble($userrow["guild"]);
+    } else {
+        $shouts = $babblebox->getBabbles();
+    }
+
     $row["shouts"] = "";
     $background = 1;
     if (count($shouts) !== 0) {
