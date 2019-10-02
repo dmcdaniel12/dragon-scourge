@@ -221,6 +221,10 @@
             $townsClass = new Towns();
             $travel = $townsClass->getTravelToList($userrow['townslist']);
 
+            // Users online
+            $users = new Users();
+            $online = $users->whosOnline();
+
 
             echo $twig->render('town.html',
                 [
@@ -231,11 +235,13 @@
                     'userinfo' => $userrow,
                     'longitude' => $longitude,
                     'latitude' => $latitude,
-                    'travelTo' => $travel
+                    'travelTo' => $travel,
+                    'online' => $online
                 ]
             );
 
         }
+        
         if ($userrow["currentaction"] == "Exploring") {
             include("explore.php");
             doexplore();
