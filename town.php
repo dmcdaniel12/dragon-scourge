@@ -18,7 +18,7 @@
 global $townrow;
 if ($townrow == false) { die(header("Location: index.php")); }
 
-function dotown() { // Default town screen.
+function dotown($twig) { // Default town screen.
     
     global $userrow;
 
@@ -30,7 +30,9 @@ function dotown() { // Default town screen.
     } else {
         $row["unread"] = "";
     }
-    display("In Town", parsetemplate(gettemplate("town"), $row), true, $userrow['id']);
+
+    echo $twig->render('town.html', ['unread' => $row['unread']]);
+//    display("In Town", parsetemplate(gettemplate("town"), $row), true, $userrow['id']);
 
 }
 
@@ -120,7 +122,7 @@ function map() { // Buy maps to towns for the Travel To menu.
         }
 
         $row["maptable"] .= "</table></form>\n";
-        
+
         display("Buy Maps", parsetemplate(gettemplate("town_map1"), $row), true, $userrow['id']);
         
     }

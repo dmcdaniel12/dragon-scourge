@@ -1,9 +1,6 @@
 {
   "require": {
     "illuminate/database": "*",
-    "jenssegers/blade": "^1.2"
-  },
-  "autoload":{
-    "files":["src/database/database.php"]
+    "twig/twig": "^2.0"
   }
 }
