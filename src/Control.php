@@ -1,7 +1,7 @@
 <?php
 
 
-    require_once('F:\xampp2\htdocs\dragon-scourge\src/database/database.php');
+    require_once('database.php');
 
     class Control extends Illuminate\Database\Eloquent\Model
     {

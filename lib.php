@@ -23,14 +23,14 @@
 // Setup for superglobal stuff that can't go in globals.php.
 
     // include all files here
-    include("classes/game/control.php");
-    include("classes/users/Users.php");
-    include("classes/users/Account.php");
-    include("classes/messages/Messages.php");
-    include("classes/town/Towns.php");
-    include("classes/game/Babblebox.php");
-    include("classes/guilds/Guilds.php");
-    include("classes/guilds/GuildApplications.php");
+    include("src/control.php");
+    include("src/Users.php");
+    include("src/Account.php");
+    include("src/Messages.php");
+    include("src/Towns.php");
+    include("src/Babblebox.php");
+    include("src/Guilds.php");
+    include("src/GuildApplications.php");
 
 $starttime = getmicrotime();
 $numqueries = 0;
