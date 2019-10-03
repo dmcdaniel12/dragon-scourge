@@ -1,5 +1,9 @@
 <?php
 
+    /**
+     * Status: Started
+     */
+
 //	Dragon Scourge
 //
 //	Program authors: Jamin Blount
@@ -29,5 +33,3 @@ Enter an amount and then click the Deposit or Withdraw button:<br />
 </form>
 If you've changed your mind, you may also return to <a href="index.php">town</a>.
 END;
-
-?>
