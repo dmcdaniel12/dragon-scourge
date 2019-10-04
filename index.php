@@ -13,7 +13,7 @@
     global $userrow, $townrow, $worldrow;
 
     // Build the data to be passed to the template
-    $messages = new Messages();
+    $messages = new messages();
     $newMessages = $messages->getUserMessages($userrow['id'], 0);
 
     if (count($newMessages) > 0) {
@@ -36,11 +36,11 @@
     }
 
     // get travel to towns
-    $townsClass = new Towns();
+    $townsClass = new towns();
     $travel = $townsClass->getTravelToList($userrow['townslist']);
 
     // Users online
-    $users = new Users();
+    $users = new users();
     $online = $users->whosOnline();
     // End data passed to template
 
@@ -71,8 +71,11 @@
                 break;
             // Towns.
             case "inn":
+                $page = 'inn.html';
+                $pageTitle = 'Inn';
+
                 include("town.php");
-                inn();
+                $rested = inn();
                 break;
             case "maps":
                 include("town.php");
@@ -245,7 +248,8 @@
             'longitude' => $longitude,
             'latitude' => $latitude,
             'travelTo' => $travel,
-            'online' => $online
+            'online' => $online,
+            'rested' => isset($rested) ? $rested : false
         ]
     );
 ?>

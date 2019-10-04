@@ -3,12 +3,13 @@
 
     require_once('database.php');
 
-    class Control extends Illuminate\Database\Eloquent\Model
+    class control extends Illuminate\Database\Eloquent\Model
     {
         protected $table = 'control';
+        public $timestamps = false;
 
         public static function getControl($id) {
-            return Control::find($id);
+            return control::find($id);
         }
 
     }

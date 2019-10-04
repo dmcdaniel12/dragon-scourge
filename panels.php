@@ -116,7 +116,7 @@ THEVERYENDOFYOU;
             $row["whosonline"] = "<div class=\"big\"><b>Who's Online</b></div>";
 
             // OOP version
-            $users = New Users();
+            $users = New users();
             $usersOnline = $users->whosOnline();
 
             $number = count($usersOnline);
@@ -155,7 +155,7 @@ THEVERYENDOFYOU;
                 $charname = $userrow["charname"];
             }
             $top = "<div class=\"big\">\n<center><b>$charname</b><br />\n";
-            $top .= "[ <a href=\"login.php?do=logout\">Log Out</a> | <a href=\"users.php?do=settings\">Account</a> | <a href=\"users.php?do=characters\">Characters</a> | <a href=\"help.php\">Help</a> ]\n";
+            $top .= ">Help</a> ]\n";
             $top .= "</center></div>\n";
 
         } else {

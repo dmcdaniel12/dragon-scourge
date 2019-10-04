@@ -2,18 +2,18 @@
 
     require_once('database.php');
 
-    class Towns extends Illuminate\Database\Eloquent\Model
+    class towns extends Illuminate\Database\Eloquent\Model
     {
 
         protected $table = 'towns';
 
         public function getWorldMaps($worldId) {
-            $towns = Towns::where('world', $worldId)->get();
+            $towns = towns::where('world', $worldId)->get();
             return $towns;
         }
 
         public function getMap($id) {
-            return Towns::find($id)->first();
+            return towns::find($id)->first();
         }
 
         public function buyMap($id, $userGold = 0){
@@ -27,8 +27,12 @@
         public function getTravelToList($ids) {
             $townslist = explode(",", $ids);
 
-            return Towns::whereIn('id', $townslist)->get();
-
+            return towns::whereIn('id', $townslist)->get();
         }
+
+        public function getUserTown($world, $lon, $lat) {
+            return towns::where('world', $world)->where('longitude', $lon)->where('latitude', $lat)->first();
+        }
+
 
     }

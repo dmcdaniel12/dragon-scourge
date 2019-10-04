@@ -22,15 +22,13 @@
 
 // Setup for superglobal stuff that can't go in globals.php.
 
-    // include all files here
-    include("src/control.php");
-    include("src/Users.php");
-    include("src/Account.php");
-    include("src/Messages.php");
-    include("src/Towns.php");
-    include("src/Babblebox.php");
-    include("src/Guilds.php");
-    include("src/GuildApplications.php");
+// src files
+    $dir = 'src';
+    $files = glob($dir . '/*.php');
+
+    foreach ($files as $file) {
+        require($file);
+    }
 
 $starttime = getmicrotime();
 $numqueries = 0;
@@ -239,7 +237,7 @@ function display($title, $content, $panels = true, $userId) { // Finalize page a
 
     global $userrow, $worldrow, $numqueries, $starttime, $version, $build;
 
-    $controlrow = Control::getControl(1);
+    $controlrow = control::getControl(1);
 
     // Make page tags for XHTML validation.
     $page = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"

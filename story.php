@@ -90,7 +90,7 @@ function storymonster() {
     }
 
     $story["story"] = nl2br($story["story"]);
-    display($story["title"], parsetemplate(gettemplate("story_monster"), $story));
+    display($story["title"], parsetemplate(gettemplate("story_monster"), $story), true, $userrow['id']);
     
 }
 

@@ -5,17 +5,18 @@
     class Guilds extends Illuminate\Database\Eloquent\Model
     {
         protected $table = 'guilds';
+        public $timestamps = false;
 
         public function getAllGuilds() {
-            return Guilds::where('active', 1)->orderBy('honor')->get();
+            return guilds::where('active', 1)->orderBy('honor')->get();
         }
 
         public function getGuild($id) {
-            return Guilds::find($id);
+            return guilds::find($id);
         }
 
         public function users($guid) {
-            return Users::where('guild', $guid)->orderBy('guildrank')->get();
+            return users::where('guild', $guid)->orderBy('guildrank')->get();
         }
 
         /**
@@ -59,7 +60,7 @@
             }
 
             // Setup Babblebox.
-            $pagerow["babblebox"] = "<div class=\"big\"><b>Guild Babblebox</b></div>\n<iframe src=\"index.php?do=babblebox&g=" . $userrow["guild"] . "\" name=\"sbox\" width=\"100%\" height=\"200\" frameborder=\"0\" id=\"bbox\">Your browser does not support inline frames! The Babble Box will not be available until you upgrade to a newer <a href=\"http://www.mozilla.org\" target=\"_new\">browser</a>.</iframe>";
+            $pagerow["babblebox"] = $userrow["guild"] . "\" name=\"sbox\" width=\"100%\" height=\"200\" frameborder=\"0\" id=\"bbox\">Your browser does not support inline frames! The Babble Box will not be available until you upgrade to a newer <a href=\"http://www.mozilla.org\" target=\"_new\">browser</a>.</iframe>";
 
             // Setup Bank.
             $pagerow["bank"] = number_format($guild->bank);
@@ -73,7 +74,7 @@
             $pagerow["memberselect"] .= "</select>";
 
             // Pull applications for selectbox.
-            $gapps = new GuildApplications();
+            $gapps = new guildApplications();
             $apps = $gapps->getGuildApplications($guild->id);
 
             if ($apps != false) {
