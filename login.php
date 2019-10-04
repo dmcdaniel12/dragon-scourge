@@ -31,7 +31,7 @@ switch($do) {
 
 function login() {
 
-    $controlRow = Control::getControl(1);
+    $controlRow = control::getControl(1);
 
     if (isset($_POST["submit"])) {
         

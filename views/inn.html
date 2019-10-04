@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Bank{% endblock %}
+
+{% block content %}
+
+{% if rested == true %}
+You wake up feeling refreshed and ready for action.<br /><br />
+You may return to <a href="index.php">town</a>, or use the direction buttons on the left to continue exploring.
+{% else %}
+
+Resting at the Inn will restore your HP, MP and TP to their maximum levels.<br /><br />
+
+A night's rest at this Inn will cost <b>{{innprice}}</b> gold. Is that ok?<br /><br />
+
+<form action="index.php?do=inn" method="post"><input type="submit" name="submit" value="Yes" /> <input type="submit" name="abortmission" value="No" /></form>
+If you've changed your mind, you may also return to <a href="index.php">town</a>.
+
+{% endif %}
+
+
+
+{% endblock %}

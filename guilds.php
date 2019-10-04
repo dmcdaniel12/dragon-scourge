@@ -31,7 +31,7 @@
 
         global $userrow, $controlrow;
 
-        $guildsClass = new Guilds();
+        $guildsClass = new guilds();
 
         if ($userrow["guild"] != 0) {
             if (!isset($_GET["list"])) {
@@ -58,7 +58,7 @@
                 }
             }
         } else {
-            $row["guildlist"] .= "<tr><td>No Guilds have been created yet.</td></tr>";
+            $row["guildlist"] .= "<tr><td>No guilds.class have been created yet.</td></tr>";
         }
 
         $row["guildlist"] .= "</table><br />";
@@ -74,7 +74,7 @@
 
         global $controlrow, $userrow;
 
-        $guildApplications = new GuildApplications();
+        $guildApplications = new guildApplications();
         $guildApps = $guildApplications->getUserGuildApplications($userrow['id']);
 
         // Errors.
@@ -97,7 +97,7 @@
 
         if (isset($_POST["submit"])) {
 
-            $guildsClass = new Guilds();
+            $guildsClass = new guilds();
             $guildValidation = $guildsClass->validateGuildInfo($_POST);
             $errorlist = $guildValidation['errorlist'];
 

@@ -2,13 +2,47 @@
 
     require 'vendor/autoload.php';
 
-    $loader = new \Twig\Loader\FilesystemLoader(['views', 'views/town']);
+    $loader = new \Twig\Loader\FilesystemLoader(['views']);
     $twig = new \Twig\Environment($loader, [
         'cache' => false,
     ]);
 
     include("lib.php");
     include("globals.php");
+
+    global $userrow, $townrow, $worldrow;
+
+    // Build the data to be passed to the template
+    $messages = new messages();
+    $newMessages = $messages->getUserMessages($userrow['id'], 0);
+
+    if (count($newMessages) > 0) {
+        $row["unread"] = "(" . count($newMessages) . " new)";
+    } else {
+        $row["unread"] = "";
+    }
+
+    // Location handling.
+    if ($userrow["latitude"] < 0) {
+        $latitude = ($userrow["latitude"] * -1) . "S";
+    } else {
+        $latitude = $userrow["latitude"] . "N";
+    }
+
+    if ($userrow["longitude"] < 0) {
+        $longitude = ($userrow["longitude"] * -1) . "W";
+    } else {
+        $longitude = $userrow["longitude"] . "E";
+    }
+
+    // get travel to towns
+    $townsClass = new towns();
+    $travel = $townsClass->getTravelToList($userrow['townslist']);
+
+    // Users online
+    $users = new users();
+    $online = $users->whosOnline();
+    // End data passed to template
 
     if (isset($_GET["do"])) {
         $do = explode(":", $_GET["do"]);
@@ -37,8 +71,11 @@
                 break;
             // Towns.
             case "inn":
+                $page = 'inn.html';
+                $pageTitle = 'Inn';
+
                 include("town.php");
-                inn();
+                $rested = inn();
                 break;
             case "maps":
                 include("town.php");
@@ -61,8 +98,8 @@
                 gamble();
                 break;
             case "bank":
-                include("town.php");
-                bank();
+                $page = 'bank.html';
+                $pageTitle = 'Bank';
                 break;
             case "top10":
                 include("town.php");
@@ -177,14 +214,6 @@
 
         }
     } else {
-        donothing($twig);
-    }
-
-    function donothing($twig)
-    {
-
-        global $userrow, $townrow, $worldrow;
-
         if ($userrow["story"] != "0" && $userrow["storylat"] == $userrow["latitude"] && $userrow["storylon"] == $userrow["longitude"]) {
             die(header("Location: story.php"));
         }
@@ -192,59 +221,14 @@
             die(header("Location: pvp.php"));
         }
 
-        // @TODO Changing over to template
         if ($userrow["currentaction"] == "In Town") {
-
-            $messages = new Messages();
-            $newMessages = $messages->getUserMessages($userrow['id'], 0);
-
-            if (count($newMessages) > 0) {
-                $row["unread"] = "(" . count($newMessages) . " new)";
-            } else {
-                $row["unread"] = "";
-            }
-
-            // Location handling.
-            if ($userrow["latitude"] < 0) {
-                $latitude = ($userrow["latitude"] * -1) . "S";
-            } else {
-                $latitude = $userrow["latitude"] . "N";
-            }
-
-            if ($userrow["longitude"] < 0) {
-                $longitude = ($userrow["longitude"] * -1) . "W";
-            } else {
-                $longitude = $userrow["longitude"] . "E";
-            }
-
-            // get travel to towns
-            $townsClass = new Towns();
-            $travel = $townsClass->getTravelToList($userrow['townslist']);
-
-            // Users online
-            $users = new Users();
-            $online = $users->whosOnline();
-
-
-            echo $twig->render('town.html',
-                [
-                    'pagetitle' => 'In Town',
-                    'townInfo' => $townrow,
-                    'worldInfo' => $worldrow,
-                    'unread' => $row['unread'],
-                    'userinfo' => $userrow,
-                    'longitude' => $longitude,
-                    'latitude' => $latitude,
-                    'travelTo' => $travel,
-                    'online' => $online
-                ]
-            );
-
+            $page = 'town.html';
+            $pageTitle = 'In Town';
         }
-        
+
         if ($userrow["currentaction"] == "Exploring") {
-            include("explore.php");
-            doexplore();
+            $page = 'explore.html';
+            $pageTitle = 'Exploring';
         }
         if ($userrow["currentaction"] == "Fighting") {
             die(header("Location: fight.php"));
@@ -252,7 +236,20 @@
         if ($userrow["currentaction"] == "PVP") {
             die(header("Location: pvp.php"));
         }
-
     }
 
+    echo $twig->render($page,
+        [
+            'pagetitle' => $pageTitle,
+            'townInfo' => $townrow,
+            'worldInfo' => $worldrow,
+            'unread' => $row['unread'],
+            'userinfo' => $userrow,
+            'longitude' => $longitude,
+            'latitude' => $latitude,
+            'travelTo' => $travel,
+            'online' => $online,
+            'rested' => isset($rested) ? $rested : false
+        ]
+    );
 ?>
