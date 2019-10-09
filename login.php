@@ -18,6 +18,11 @@
 
     include("lib.php");
 
+    $loader = new \Twig\Loader\FilesystemLoader(['views']);
+    $twig = new \Twig\Environment($loader, [
+        'cache' => false,
+    ]);
+
 
 if (isset($_GET["do"])) { $do = $_GET["do"]; } else { $do = ""; }
 
@@ -26,10 +31,10 @@ switch($do) {
         logout();
         break;
     default:
-        login();
+        login($twig);
 }
 
-function login() {
+function login($twig) {
 
     $controlRow = control::getControl(1);
 
@@ -52,7 +57,10 @@ function login() {
         die(header("Location: index.php"));
         
     } else {
-        display("Log In", gettemplate("login"), false, 0);
+
+        echo $twig->render('login.html');
+
+//        display("Log In", gettemplate("login"), false, 0);
         
     }
     

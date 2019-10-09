@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{gamename}} :: {{pagetitle}}</title>
+    <link rel="stylesheet" href="css/primary.css" type="text/css"/>
+    <script type="text/javascript" src="scripts/tooltip.js"></script>
+    <style type="text/css">
+        body {
+            background-image: url("images/background.jpg");
+        }
+    </style>
+</head>
+<body>
+<center>
+
+    <table cellspacing="0" cellpadding="3"
+           style="width: 800px; height: 570px; border: solid 1px black; background-color: white; ">
+        <tr>
+            <td colspan="3" style="border-bottom: solid 1px #cccccc;">
+                <table width="100%" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="65%">
+                            <a href="index.php"><img src="images/logo.png" alt="{{gamename}}" title="{{gamename}}"/></a>
+                        </td>
+                        <td style="vertical-align:middle; white-space:nowrap;">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" style="height: 100%; border-right: solid 1px #cccccc;">
+                <img src="images/spacer.gif" alt="" width="140" height="1"/><br/>
+            </td>
+            <td valign="top" style="height: 100%;">
+                <div style="width: 475px; height: 405px; overflow: auto;">
+                    <div class="big"><b>Log In</b></div>
+
+                    <form action="login.php?do=login" method="post">
+                        <table width="90%" cellspacing="0" cellpadding="5">
+                            <tr><td width="20%">Username:</td><td><input type="text" name="username" size="30" maxlength="30" /></td></tr>
+                            <tr><td>Password:</td><td><input type="password" name="password" size="30" maxlength="30" /></td></tr>
+                            <tr><td>Remember Me?</td><td><input type="checkbox" name="remember" value="yes" /> Yes.</td></tr>
+                            <tr><td colspan="2"><input type="submit" name="submit" value="Log In" /></td></tr>
+                        </table>
+                    </form>
+                </div>
+            </td>
+            <td valign="top" style="height: 100%; border-left: solid 1px #cccccc;">
+                <img src="images/spacer.gif" alt="" width="160" height="1"/><br/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-top: solid 1px #cccccc;"></td>
+        </tr>
+    </table>
+
+</center>
+
+</body>
+
+</html>
