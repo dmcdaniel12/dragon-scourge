@@ -70,17 +70,7 @@
                 botkillah();
                 break;
             // Towns.
-            case "inn":
-                $page = 'inn.html';
-                $pageTitle = 'Inn';
 
-                include("town.php");
-                $rested = inn();
-                break;
-            case "maps":
-                include("town.php");
-                map();
-                break;
             case "duel":
                 include("town.php");
                 duel();
@@ -96,10 +86,6 @@
             case "gamble":
                 include("town.php");
                 gamble();
-                break;
-            case "bank":
-                $page = 'bank.html';
-                $pageTitle = 'Bank';
                 break;
             case "top10":
                 include("town.php");

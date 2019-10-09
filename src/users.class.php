@@ -13,8 +13,8 @@
             return $this->user;
         }
 
-        public function getMaps() {
-
+        public function getOwnedMaps() {
+            return explode(',',$this->user['townslist']);
         }
 
         public function buyMap() {

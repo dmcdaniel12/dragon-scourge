@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Maps{% endblock %}
+
+{% block content %}
+
+Buying Maps will put the town in your Travel To box, for fast travel around the Realm.<br /><br />
+Click a town name to purchase its map.<br /><br />
+
+<form action="index.php?do=maps" method="post">
+    <table width="95%">
+        <!-- Foreach here -->
+        {% for map in maps %}
+        <tr>
+            <td width="20%">
+                <input type="submit" name="two" value="{{ map['name'] }}" style="width: 100px;" />
+            </td>
+            <td width="30%" style="vertical-align: middle;">
+                Price: <b>{{ map['mapprice'] }}Gold</b>
+            </td>
+            <td colspan="2" style="vertical-align: middle;">
+                Buy map to reveal details.
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</form>
+
+
+If you've changed your mind, you may also return to <a href="index.php">town</a>.
+
+
+{% endblock %}
+
+
