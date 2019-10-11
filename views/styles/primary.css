@@ -1,7 +1,10 @@
 .navbar {
+}
+
+.big {
     font: 11px Verdana;
     background-color: #dddddd;
     border: solid 1px #aaaaaa;
     padding: 2px;
-    margin-bottom: 3px;
+    margin: 3px 0px;
 }

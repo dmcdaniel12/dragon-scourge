@@ -1,6 +1,12 @@
 DRAGON SCOURGE
 Changelog
 
+***** BETA SIX *****
+10.11.2019 - Build 21 (Leviathan)
+- Added in classes
+- New template - Twig based
+- Added in ORM for processing better sql data
+
 ***** BETA FIVE *****
 
 9.2.2007 - Build 20 (Consolation Prize Part Deux):
