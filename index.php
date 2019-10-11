@@ -179,10 +179,6 @@
                 guildupdate();
                 break;
             // Misc.
-            case "babblebox":
-                include("misc.php");
-                babblebox2();
-                break;
             case "showmap":
                 include("misc.php");
                 showmap();

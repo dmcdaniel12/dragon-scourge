@@ -1,9 +1,52 @@
-{{babblebox}}
+<div class="babble">
+    <div class="big">
+        <b>Babble box</b>
+    </div>
 
-<div class="big">
-    <b>Who's Online</b>
+    <div class="babblebox">
+    </div>
+
+    <div class="post">
+        <div class="babble1">
+            <form action="index.php?do=babblebox{{guild}}" method="post">
+                <input type="text" name="babble" size="15" maxlength="100" /> <input type="submit" name="submit" value="Babble!" />
+            </form>
+        </div>
+    </div>
+
 </div>
-There are <b>1</b> user(s) online within the last 10 minutes:
-{% for user in online %}
+
+<div class="online">
+    <div class="big">
+        <b>Who's Online</b>
+    </div>
+    There are <b>1</b> user(s) online within the last 10 minutes:
+    {% for user in online %}
     <a href="users.php?do=profile&uid={{ user['id'] }}">{{ user['charname'] }}</a>
-{% endfor %}
+    {% endfor %}
+</div>
+
+<!-- jQuery to get new babblebox messages -->
+<script>
+    getBabble();
+
+    window.setInterval(function(){
+        getBabble();
+    }, 1000);
+
+    function getBabble() {
+        $.ajax({
+            url: "babblebox.php", success: function (result) {
+
+                var html = "";
+
+                $.each(JSON.parse(result), function () {
+                    html += "<div class='babble1'>[<a href='users.php?do=profile&uid=" + this.id + "' targer='_parent'>" + this.charname + "</a>] " + this.content + "</div>";
+                    console.log(this);
+                });
+
+                $(".babblebox").html(html);
+            }
+        });
+    }
+</script>

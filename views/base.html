@@ -3,6 +3,10 @@
 
 <head>
     <title>{{gamename}} :: {{pagetitle}}</title>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="css/primary.css" type="text/css"/>
     <script type="text/javascript" src="scripts/tooltip.js"></script>
     <style type="text/css">
@@ -32,7 +36,6 @@
         </tr>
         <tr>
             <td valign="top" style="height: 100%; border-right: solid 1px #cccccc;">
-                <img src="images/spacer.gif" alt="" width="140" height="1"/><br/>
                 {{ include('navs/leftnav.html') }}
             </td>
             <td valign="top" style="height: 100%;">
@@ -42,7 +45,6 @@
                 </div>
             </td>
             <td valign="top" style="height: 100%; border-left: solid 1px #cccccc;">
-                <img src="images/spacer.gif" alt="" width="160" height="1"/><br/>
                 {{ include('navs/rightnav.html') }}
             </td>
         </tr>
