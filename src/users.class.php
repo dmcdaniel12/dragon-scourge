@@ -29,7 +29,6 @@
             return $whosOnline;
         }
 
-
         public function restAtInn($id, $innCost) {
             $user = $this->getUserById($id);
             $user->currenthp = $user->maxhp;
@@ -37,5 +36,21 @@
             $user->currenttp = $user->maxtp;
             $user->gold = $user->gold - $innCost;
             $user->save();
+        }
+
+        public function saveBank($amount, $type) {
+
+            if ($type === 'Deposit') {
+                $currentBank = $this->user->bank + $amount;
+                $this->user->bank = $currentBank;
+                $this->user->gold = $this->user->gold - $amount;
+                $this->user->save();
+            } else {
+                $currentBank = $this->user->bank - $amount;
+                $this->user->bank = $currentBank;
+                $this->user->gold = $this->user->gold + $amount;
+                $this->user->save();
+            }
+
         }
     }

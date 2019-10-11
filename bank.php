@@ -12,8 +12,16 @@
 
     global $userrow, $townrow, $worldrow;
 
-    // Build the data to be passed to the template
+    $users = new users();
+    $userinfo = $users->getUserById($userrow['id']);
     $messages = new messages();
+    $townsClass = new towns();
+
+    if ($_POST) {
+        $users->saveBank($_POST['amount'], $_POST['type']);
+    }
+
+    // Build the data to be passed to the template
     $newMessages = $messages->getUserMessages($userrow['id'], 0);
 
     if (count($newMessages) > 0) {
@@ -36,17 +44,15 @@
     }
 
     // get travel to towns
-    $townsClass = new towns();
     $travel = $townsClass->getTravelToList($userrow['townslist']);
 
     // Users online
-    $users = new users();
-    $users->getUserById($userrow['id']);
     $online = $users->whosOnline();
 
     // town maps
-    $towns = new towns();
-    $townMaps = $towns->getWorldMaps($userrow["world"]);
+    $townMaps = $townsClass->getWorldMaps($userrow["world"]);
+
+    // Bank information
 
     // End data passed to template
 
@@ -59,7 +65,7 @@
             'townInfo' => $townrow,
             'worldInfo' => $worldrow,
             'unread' => $row['unread'],
-            'userinfo' => $userrow,
+            'userinfo' => $userinfo,
             'longitude' => $longitude,
             'latitude' => $latitude,
             'travelTo' => $travel,
