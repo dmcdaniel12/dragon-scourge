@@ -5,7 +5,7 @@ CREATE TABLE `accounts` (
   `password` varchar(32) NOT NULL default '',
   `emailaddress` varchar(200) NOT NULL default '',
   `verifycode` varchar(32) NOT NULL default '',
-  `regdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `regdate` datetime NOT NULL,
   `regip` varchar(16) NOT NULL default '',
   `authlevel` tinyint(3) unsigned NOT NULL default '1',
   `language` varchar(30) NOT NULL default '',
@@ -19,7 +19,7 @@ CREATE TABLE `accounts` (
 DROP TABLE IF EXISTS `babblebox`;
 CREATE TABLE `babblebox` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `posttime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `posttime` datetime NOT NULL,
   `charname` varchar(30) NOT NULL default '',
   `charid` int(11) unsigned NOT NULL default '0',
   `content` varchar(255) NOT NULL default '',
@@ -412,7 +412,7 @@ INSERT INTO `itemsuffixes` (`id`, `name`, `slotnumber`, `unique`, `willdrop`, `b
 DROP TABLE IF EXISTS `messages`;
 CREATE TABLE `messages` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `postdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `postdate` datetime NOT NULL,
   `senderid` int(10) unsigned NOT NULL default '0',
   `sendername` varchar(30) NOT NULL default '',
   `recipientid` int(10) unsigned NOT NULL default '0',
@@ -853,9 +853,9 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `account` int(10) unsigned NOT NULL default '0',
-  `birthdate` datetime NOT NULL default '0000-00-00 00:00:00',
+  `birthdate` datetime NOT NULL,
   `lastip` varchar(16) NOT NULL default '',
-  `onlinetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `onlinetime` datetime NOT NULL,
   `exploreverify` varchar(6) NOT NULL default '',
   `exploreverifyimage` varchar(12) NOT NULL default '',
   `explorefailed` int(10) unsigned NOT NULL default '0',

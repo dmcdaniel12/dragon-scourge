@@ -447,7 +447,7 @@ function charnew() {
     if ($acctrow["characters"] == 0) { $row["defaultenabled"] = "disabled=\"disabled\""; } else { $row["defaultenabled"] = ""; }
     $row["maxsize"] = round($controlrow["avatarmaxsize"] / 1000, 1);
     
-    display("Characters", parsetemplate(gettemplate("users_charnew"), $row), false);
+    display("Characters", parsetemplate(gettemplate("users_charnew"), $row), false, null);
     
 }
 

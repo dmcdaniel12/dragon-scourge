@@ -10,7 +10,7 @@
         'host' => 'localhost',
         'database' => 'ds',
         'username' => 'root',
-        'password' => '',
+        'password' => 'VLocis4ME!',
         'charset' => 'utf8',
         'collation' => 'utf8_unicode_ci',
         'prefix' => ''

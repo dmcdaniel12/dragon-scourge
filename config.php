@@ -17,7 +17,7 @@
 $dbsettings = [
         "server"        => "localhost",     // MySQL server name. (Usually localhost.)
         "user"          => "root",          // MySQL username.
-        "pass"          => "",              // MySQL password.
+        "pass"          => "VLocis4ME!",              // MySQL password.
         "name"          => "ds",            // MySQL database name.
         "prefix"        => "sx",            // Prefix for table names.
         "secretword"    => "test123"        // Secret word used when hashing information for cookies.
